@@ -22,4 +22,6 @@ float* heap_insert(float* H, float value,int size);
 
 void heap_sort(float* H,int size);
 
+void counting_sort(float **A,int size_A, float **B,int k1,int k2);
+
 #endif

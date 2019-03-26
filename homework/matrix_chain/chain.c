@@ -51,6 +51,6 @@ int** matrixchain(int* P,int n){
             matrixchain_aux(P,m,s,i,j);
         }    
     }
-    deallocate_matrix(s,n-1);
-    return m;
+    deallocate_matrix(m,n);
+    return s;
 }
