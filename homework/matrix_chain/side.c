@@ -3,7 +3,7 @@
 #include "side.h"
 #include <time.h>
 #define MAX_ELEM_VALUE 250
-#define CMM(M,row,col) M[row] [col-row]
+//#define CMM(M,row,col) M[row] [col-row]
 
 
 void randomly_fill_matrix(float **A, const size_t A_rows, const size_t A_cols)
@@ -98,7 +98,7 @@ double using_s(float **res,float ***A,int *P,int **s,int left,int right,double *
   }
 
   else{
-    int r_par=CMM(s,left,right-1);
+    int r_par=s[left][right-1]-1;  //CMM(s,left,right-1)-1;
     //printf("all fine with r_par: %d ,left: %d ,right: %d ,\n",r_par,left,right);
     //matrixes to store temp results
     float**C_r=allocate_matrix(P[left],P[r_par+1]);

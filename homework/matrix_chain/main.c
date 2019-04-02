@@ -61,10 +61,13 @@ int main()
 
     time=0;
 
-    printf("%lf\n",time);
     int** s=matrixchain(P,n);
 
+    float **res=allocate_matrix(P[0],P[n]);
+    time=using_s(res,A,P,s,0,n-1,&time);
+    printf("%lf\n",time);
 
+/*
     for(int i = 0; i < (n-1); i++)
     {
         for(int j = 0; j < n-1; j++)
@@ -73,6 +76,7 @@ int main()
         }
     printf("\n");    
     }
+*/
 //checked it give wanted results for both s and m
  
 
