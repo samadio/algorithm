@@ -7,6 +7,11 @@ int **allocate_matrix_m(const int rows){
 
    for (int i=0; i<rows; i++) {
      A[i]=(int *)malloc(sizeof(int)*(rows));
+    for(size_t j = 0; j < i; j++)
+    {
+        A[i][j]=0;
+    }
+
    }
 
    return A;
@@ -15,7 +20,7 @@ int **allocate_matrix_m(const int rows){
 void deallocate_matrix(int **A, const int rows)
 {
   for (int i=0; i<rows; i++) {
-    free(A[i]);
+    free(A[i]);    
   }
 
   free(A);

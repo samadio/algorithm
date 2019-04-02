@@ -1,0 +1,16 @@
+0.000015	0.000009
+0x7ffe82741978 C allocated 0 
+0x7ffe82741978 C allocated 1
+0x7ffe82741978 C allocated 2
+0x7ffe82741978 C allocated 3
+0x7ffe82741978 C deallocated 0
+0x7ffe82741978 C deallocated 1
+0x7ffe82741978 C deallocated 2
+0x7ffe82741978 C deallocated last
+0x7ffe82741988 D allocated 0
+0x7ffe82741988 D allocated 1
+0x7ffe82741988 D allocated 2
+0x7ffe82741988 D deallocated 0
+0x7ffe82741988 D deallocated 1
+0x7ffe82741988 D deallocated 2
+naive time	new time
