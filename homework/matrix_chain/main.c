@@ -5,25 +5,32 @@
 #include "chain.h"
 #include "side.h"
 
-int main()
-{
-    int n=4; //number of matrices
-    int* P= (int*)malloc(sizeof(int)*(n+1));
+int *build_dimensions(const int n) {
+  int *dims = (int *)malloc(sizeof(int) * (n + 1));
 
-    //creating ad filling matrixes
-    P[0]=3;
-    P[1]=5;
-    P[2]=10;
-    P[3]=2;
-    P[4]=3;
-    
+  for (size_t i = 0; i < n + 1; i++) {
+    dims[i] = rand() % 600;
+  }
 
-    float*** A=(float***)malloc(n*sizeof(float**));
-    for(size_t i = 0; i < n; i++)
-    {
-        A[i]= allocate_matrix(P[i],P[i+1]); //creates vector of matrixes
-        //randomly_fill_matrix(A[i],P[i],P[i+1]); //fill each matrix
-    }
+  return dims;
+}
+
+float ***build_problem_instance(const int *dims, const int n) {
+  float ***A = (float ***)malloc(sizeof(float **) * n);
+
+  for (size_t i = 0; i < n; i++) {
+    A[i] = allocate_matrix(dims[i], dims[i + 1]);
+  }
+
+  return A;
+}
+
+int main() {
+  for(int n=2;n<33;n=n*2){
+
+    int *P = build_dimensions(n);
+    float ***A = build_problem_instance(P, n);
+
     //matrixes for partial results
     float **C=allocate_matrix(P[0],P[1]);
     copy_matrix(A[0],C,P[0],P[1]);
@@ -56,10 +63,10 @@ int main()
 
     deallocate_matrix_fl(C,P[0]);    
 
-    printf("naive time\tnew time\n");
-    printf("%lf\t", time);
+    printf("size\tnaive time\tnew time\n");
+    printf("%d\t%lf\t",n, time);
 
-    time=0;
+    time=0.0;
 
     int** s=matrixchain(P,n);
 
@@ -91,6 +98,9 @@ int main()
     }
     free(A);
 
+    //deallocate res
+    deallocate_matrix_fl(res,P[0]);
+
     //deallocate s
     for (size_t i=0; i<n-1; i++) {
     free(s[i]);
@@ -98,5 +108,7 @@ int main()
 
     free(s);
     free(P);
-    return 0;
+
+  }
+  return 0;
 }
