@@ -1,0 +1,18 @@
+size	naive time	new time
+10	4.865545	1.135900
+size	naive time	new time
+20	5.335351	0.157590
+size	naive time	new time
+30	4.202954	0.426147
+size	naive time	new time
+40	6.684054	0.076952
+size	naive time	new time
+50	10.287843	0.701189
+size	naive time	new time
+60	13.142422	0.142658
+size	naive time	new time
+70	20.302905	0.031385
+size	naive time	new time
+80	21.338797	0.249169
+size	naive time	new time
+90	5.814228	0.115472

@@ -26,7 +26,7 @@ float ***build_problem_instance(const int *dims, const int n) {
 }
 
 int main() {
-  for(int n=2;n<33;n=n*2){
+  for(int n=10;n<100;n=n+10){
 
     int *P = build_dimensions(n);
     float ***A = build_problem_instance(P, n);
@@ -39,6 +39,8 @@ int main() {
     struct timespec b_time, e_time;
     double time=0.0;
     
+
+    clock_gettime(CLOCK_REALTIME, &b_time);     
     //naive ordered matrix_multiplication
     for(size_t i = 0; i < n-1; i++)
     {
@@ -46,13 +48,8 @@ int main() {
         
 
 
-        clock_gettime(CLOCK_REALTIME, &b_time);
         naive_matrix_mult(D,C,A[i+1],P[0],P[i+1],P[i+1],P[i+2]);
-        clock_gettime(CLOCK_REALTIME, &e_time);
-
-        time+=get_execution_time(b_time, e_time);
-
-        
+   
         
         deallocate_matrix_fl(C,P[0]); //free partial results
         C=allocate_matrix(P[0],P[i+2]);
@@ -63,19 +60,31 @@ int main() {
 
     deallocate_matrix_fl(C,P[0]);    
 
+    clock_gettime(CLOCK_REALTIME, &e_time);
+
+    time=get_execution_time(b_time, e_time);
+
+
     printf("size\tnaive time\tnew time\n");
     printf("%d\t%lf\t",n, time);
 
-    time=0.0;
 
     int** s=matrixchain(P,n);
 
+    clock_gettime(CLOCK_REALTIME, &b_time); 
+
     float **res=allocate_matrix(P[0],P[n]);
-    time=using_s(res,A,P,s,0,n-1,&time);
+    using_s(res,A,P,s,0,n-1);
+
+    clock_gettime(CLOCK_REALTIME, &e_time); 
+
+
+    time=get_execution_time(b_time, e_time);
+
     printf("%lf\n",time);
 
 /*
-    for(int i = 0; i < (n-1); i++)
+    for(int i = 0; i < n-1; i++)
     {
         for(int j = 0; j < n-1; j++)
         {
@@ -86,7 +95,6 @@ int main() {
 */
 //checked it give wanted results for both s and m
  
-
 
 
 

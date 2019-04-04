@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<limits.h>
-#define CMM(M, row, col) M[row][col - row]
+#include <limits.h>
+#define CMM(M, row, col) M[row][col]
 
 int **allocate_matrix_m(const int rows){                
    int **A=(int **)malloc(sizeof(int *)*rows);
 
    for (int i=0; i<rows; i++) {
      A[i]=(int *)malloc(sizeof(int)*(rows));
-    for(size_t j = 0; j < i; j++)
-    {
-        A[i][j]=0;
-    }
-
+     for(size_t j = 0; j < i; j++)
+     {
+         A[i][j]=0;
+     }
+     
    }
 
    return A;
@@ -45,8 +45,10 @@ void matrixchain_aux(int* P,int** m,int** s,int i,int j){
 
 int** matrixchain(int* P,int n){
     int** m=allocate_matrix_m(n);
-    int** s=allocate_matrix_m(n-1);
-    for(int i=0;i<n;i++){
+    int** s=allocate_matrix_m(n-1);    
+
+    for(size_t i = 0; i < n; i++)
+    {
         CMM(m,i,i)=0;
     }
 

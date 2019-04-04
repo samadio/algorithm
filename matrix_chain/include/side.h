@@ -22,6 +22,6 @@ double get_execution_time(const struct timespec b_time,
 
 void copy_matrix(float **A, float**B, int Ar, int Ac);
 
-double using_s(float **res,float ***A,int *P,int **s,int left,int right,double *time);
+double using_s(float **res,float ***A,int *P,int **s,int left,int right);
 
 #endif

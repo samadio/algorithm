@@ -3,7 +3,7 @@
 #include "side.h"
 #include <time.h>
 #define MAX_ELEM_VALUE 250
-#define CMM(M,row,col) M[row] [col-row]
+#define CMM(M,row,col) M[row] [col]
 
 
 void randomly_fill_matrix(float **A, const size_t A_rows, const size_t A_cols)
@@ -90,8 +90,7 @@ void copy_matrix(float **A, float**B, int Ar, int Ac){
 }
 
 
-double using_s(float **res,float ***A,int *P,int **s,int left,int right,double *time){
-  struct timespec b_time, e_time;
+double using_s(float **res,float ***A,int *P,int **s,int left,int right){
   
   if(left==right){
     copy_matrix(A[left], res,P[left], P[left+1] );
@@ -104,14 +103,10 @@ double using_s(float **res,float ***A,int *P,int **s,int left,int right,double *
     float**C_r=allocate_matrix(P[left],P[r_par+1]);
     float**D_l=allocate_matrix(P[r_par+1],P[right+1]);
 
-    using_s(C_r,A,P,s,left,r_par,time); //recursive call first left then right
-    using_s(D_l,A,P,s,r_par+1,right,time);
+    using_s(C_r,A,P,s,left,r_par); //recursive call first left then right
+    using_s(D_l,A,P,s,r_par+1,right);
     
-    clock_gettime(CLOCK_REALTIME, &b_time);
     naive_matrix_mult(res,C_r,D_l,P[left],P[r_par+1],P[r_par+1],P[right+1]);
-    clock_gettime(CLOCK_REALTIME, &e_time);
-    (*time)+=get_execution_time(b_time, e_time);
-
 
     deallocate_matrix_fl(C_r,P[left]);
     deallocate_matrix_fl(D_l,P[r_par+1]);
