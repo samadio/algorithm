@@ -43,7 +43,7 @@ int main()
     float *tmp=(float *)malloc(sizeof(float)*n);
     copy_vec(tmp,v,n);
     struct timespec b_time, e_time;
-    printf("size\tinsertion time\tquick_sort\tordered?\theap_sort\tordered\n");
+    printf("size\tinsertion time\tquick_sort\tordered?\theap_sort\tordered?\n");
 
     for(int len=1<<10;len<n;len=len*2){
 
