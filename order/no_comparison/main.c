@@ -99,8 +99,8 @@ int main(){
 
     //number of digits scale linearly
 
-  int Z[2]={10,1000};
-  printf("%d\n", max_digits(Z,2));
+  int Z[7]={10,1000,1000503902,213,123456789,1,10};
+  printf("%d\n", max_digits(Z,7));
 
 
   return 0;

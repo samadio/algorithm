@@ -48,7 +48,8 @@ int max_digits(int* A, int size){
         int den=(int)pow(10,d-1);
         for(size_t i = 0; i < size; i++) //read all the array
         {
-            if(((A[i]%mod)/den)==0){ //if this is 0, then A[i] has d-1 digits 
+            if(((A[i]%mod)/den)==0 && A[i]/den==0){ //if first term is 0, then A[i] has d-1 digits
+                           //second if term checks if I encountered a zero in the middle of a number 
                 count+=1; //number of elements with d-1 digits
             }
         }
