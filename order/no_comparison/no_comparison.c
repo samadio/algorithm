@@ -49,7 +49,7 @@ void radix_sort(int *A,int size){
     for(size_t i = 0; i < size; i++) //pick an element of the array
     {
         count=0;
-        for(size_t j = 0; j < size; j++) //read all the other element of the array
+        for(size_t j = 0; j < i+1; j++) //read all the other element of the array
         {
             if((A[i]%(int)pow(10,shift))/pow(10,shift-1)<(A[j]%(int)pow(10,shift))/pow(10,shift-1) && i>j)
             {

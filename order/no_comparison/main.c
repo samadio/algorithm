@@ -44,7 +44,7 @@ int main(){
   int *B=(int*)calloc(n,sizeof(int));
 
 
-  printf("size\tcounting sort\tordered?\n");
+  printf("size\tcounting sort\tordered?\tradix sort\tordered?\n");
   for(int len = 1<<23; len <=n; len=len*2)
   {
       
@@ -59,8 +59,13 @@ int main(){
     counting_sort_with_bounds(A,B,len,0,MAX);
     clock_gettime(CLOCK_REALTIME, &e_time);
     printf("%d\t%lf", len,get_execution_time(b_time, e_time));    
-    printf("\t%f\n", ordered(B,len)*1.0);
+    printf("\t%f", ordered(B,len)*1.0);
     
+    //clock_gettime(CLOCK_REALTIME, &b_time);
+    //radix_sort(A,len);
+    //clock_gettime(CLOCK_REALTIME, &e_time);
+    //printf("\t%lf", get_execution_time(b_time, e_time));    
+    //printf("\t%f\n", ordered(A,len)*1.0);
     
     
 
@@ -68,11 +73,19 @@ int main(){
   }
   free(B);
   free(A);
-  printf("Scaling seems to be linear \n");
+  printf("Scaling seems to be linear for counting sort\n");
   
-  int Z[10]={3,5,4,6,2,99,91,10,214,2567};
-  radix_sort(Z,10);
-  printf("%d \n",ordered(Z,10));
+  int* Z=create_array(1<<11);
   
+  struct timespec b_time, e_time;
+
+  clock_gettime(CLOCK_REALTIME, &b_time);
+  radix_sort(Z,1<<11);
+  clock_gettime(CLOCK_REALTIME, &e_time);
+  printf("%lf", get_execution_time(b_time, e_time));   
+  printf("\t%d \n",ordered(Z,1<<11));
+  
+  free(Z);
+
   return 0;
 }
