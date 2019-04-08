@@ -75,17 +75,33 @@ int main(){
   free(A);
   printf("Scaling seems to be linear for counting sort\n");
   
+
+  /* implementation of quadratic radix_sort for unknown number of digits
+    
+    //actually, u can easily write an algorithm whit theta(N) complexity using % and /like in 
+    //the quadratic radix_sort to determine max number of digits of elems in array,
+    //such that using this max_digit()and then applying radix sort is still theta(2N)
+    //use this to improve radix_sort
+
   int* Z=create_array(1<<11);
   
   struct timespec b_time, e_time;
 
   clock_gettime(CLOCK_REALTIME, &b_time);
-  radix_sort(Z,1<<11);
+  quadratic_radix_sort(Z,1<<11);
   clock_gettime(CLOCK_REALTIME, &e_time);
   printf("%lf", get_execution_time(b_time, e_time));   
   printf("\t%d \n",ordered(Z,1<<11));
   
+
   free(Z);
+  */
+
+    //number of digits scale linearly
+
+  int Z[2]={10,1000};
+  printf("%d\n", max_digits(Z,2));
+
 
   return 0;
 }

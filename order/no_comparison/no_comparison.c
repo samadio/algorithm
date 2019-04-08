@@ -39,8 +39,26 @@ void counting_sort_with_bounds(int *A,int* B, int len,int low, int up){
     
 }
 
+int max_digits(int* A, int size){
+    int count=0;
+    int d=1;
+    while(count<size){
+        count=0;
+        int mod=(int)pow(10,d);
+        int den=(int)pow(10,d-1);
+        for(size_t i = 0; i < size; i++) //read all the array
+        {
+            if(((A[i]%mod)/den)==0){ //if this is 0, then A[i] has d-1 digits 
+                count+=1; //number of elements with d-1 digits
+            }
+        }
+        d+=1;
+    }
+    return d-2;
+}
 
-void radix_sort(int *A,int size){
+
+void quadratic_radix_sort(int *A,int size){ //to order without knowing digits
   //shift is digit taken in account
   int shift=1;
   int count=0;
