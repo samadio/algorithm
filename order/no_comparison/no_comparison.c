@@ -1,8 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-//#include"sorting.h"
+#include"sorting.h"
 #include"no_comparison.h"
+
+void switc(int* a, int* b){
+    if(*a==*b){return;}
+    *a=*a+*b;
+    *b=*a-*b;
+    *a=*a-*b;
+}
+
+
 
 void counting_sort_with_bounds(int *A,int* B, int len,int low, int up){
     int *C=(int*)calloc(1+up-low,sizeof(int));
@@ -28,6 +37,29 @@ void counting_sort_with_bounds(int *A,int* B, int len,int low, int up){
 
     free(C);
     
+}
+
+
+void radix_sort(int *A,int size){
+  //shift is digit taken in account
+  int shift=1;
+  int count=0;
+  while(count!=size)
+  {
+    for(size_t i = 0; i < size; i++) //pick an element of the array
+    {
+        count=0;
+        for(size_t j = 0; j < size; j++) //read all the other element of the array
+        {
+            if((A[i]%(int)pow(10,shift))/pow(10,shift-1)<(A[j]%(int)pow(10,shift))/pow(10,shift-1) && i>j)
+            {
+                switc(&A[i],&A[j]);
+            }
+            if(A[j]/(int)pow(10,shift)==0){count+=1;} //count how many elements have shift digits
+        }
+    }
+    shift+=1;
+  }
 }
 
 

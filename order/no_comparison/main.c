@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <time.h>
-//#include"sorting.h"
-#include"no_comparison.h"
+#include <math.h>
+#include "sorting.h"
+#include "no_comparison.h"
 
 #define MAX 500
 
@@ -38,7 +39,7 @@ int ordered(int *v,int len){
 
 
 int main(){
-  int n=1<<29;
+  int n=1<<23;
   int* A=create_array(n);
   int *B=(int*)calloc(n,sizeof(int));
 
@@ -68,5 +69,10 @@ int main(){
   free(B);
   free(A);
   printf("Scaling seems to be linear \n");
+  
+  int Z[10]={3,5,4,6,2,99,91,10,214,2567};
+  radix_sort(Z,10);
+  printf("%d \n",ordered(Z,10));
+  
   return 0;
 }
