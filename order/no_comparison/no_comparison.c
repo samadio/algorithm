@@ -66,45 +66,32 @@ int get_digit(int num, int d){
 }
 
 void radix_sort(int *A,int size){ //to order without knowing digits
-  int d=max_digits(A,size);  //now I know number of digits
-  int **B=(int **)malloc(sizeof(int*)*d);
+    int d=max_digits(A,size);  //now I know number of digits
+    int shift = 1; //digit considered as power of 10
+    int new[size];
 
-  for (size_t i=0; i<d; i++) {
-      B[i]=(int *)calloc(size,sizeof(int));
-  }
-  
+    for(shift=1;shift<=pow(10,d);shift=shift*10){
+        int C[10] = {0};
+        for (int i = 0; i < size; i++)
+            C[ (A[i]/shift)%10 ]+=1; //number of occurrences for each of the 10 digits
+            //A[i]/shift%10 == digit of the power 10**shift
 
-  for(size_t k = 1; k <= d; k++)
-  {  
-    for(size_t i = 0; i < size; i++) //pick an element of the array
-    {
-       B[k-1][i]=get_digit(A[i],k); 
+        //similar to counting_sort
+        for (int i = 1; i < 10; i++)
+            C[i] += C[i - 1];
+
+        // Build the sorted array as in counting_sort
+        for (int i = size - 1; i >= 0; i--)
+        {
+            new[C[ (A[i]/shift)%10 ]-1] = A[i];
+            C[ (A[i]/shift)%10 ]-=1;
+        }
+
+        //new now contains the sorted result, so update A
+        for (int i = 0; i < size; i++)
+            A[i] = new[i];
+        // shift increases: next digit
     }
-  }
-
-
-  for(size_t k = 1; k <=d ; k++)
-  {
-      printf("safe zone\n");
-      counting_sort_with_bounds(B[k-1],B[k-1],size,0,9);
-  }
-
-  for(size_t i = 0; i < size; i++)
-  {
-     A[i]=0; 
-     for(size_t k = 1; k <= d; k++)
-     {
-         A[i]+= B[k-1][i];
-     }
-  }
-
-
-
-  for(size_t i = 0; i <d; i++)
-  {
-      free(B[i]);
-  }
-  free(B);
 }
 
 

@@ -39,14 +39,13 @@ int ordered(int *v,int len){
 
 
 int main(){
-  //int n=1<<29; //from 23 to 29
-  int n=2000;
+  int n=1<<20; //from 15 to 20
   int* A=create_array(n);
   int *B=(int*)calloc(n,sizeof(int));
-
+  int* A2=create_array(n);
 
   printf("size\tcounting sort\tordered?\tradix sort\tordered?\n");
-  for(int len = 1000; len <=2000; len=len*2)
+  for(int len = 1<<15; len <=n; len=len*2)
   {
       
     //test for values in [k1,k2]
@@ -61,12 +60,13 @@ int main(){
     clock_gettime(CLOCK_REALTIME, &e_time);
     printf("%d\t%lf", len,get_execution_time(b_time, e_time));    
     printf("\t%f", ordered(B,len)*1.0);
+  
     
     clock_gettime(CLOCK_REALTIME, &b_time);
-    radix_sort(A,len);
+    radix_sort(A2,len);
     clock_gettime(CLOCK_REALTIME, &e_time);
     printf("\t%lf", get_execution_time(b_time, e_time));    
-    printf("\t%f\n", ordered(A,len)*1.0);
+    printf("\t%f\n", ordered(A2,len)*1.0);
     
     
 
