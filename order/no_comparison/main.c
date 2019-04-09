@@ -39,13 +39,14 @@ int ordered(int *v,int len){
 
 
 int main(){
-  int n=1<<23;
+  //int n=1<<29; //from 23 to 29
+  int n=2000;
   int* A=create_array(n);
   int *B=(int*)calloc(n,sizeof(int));
 
 
   printf("size\tcounting sort\tordered?\tradix sort\tordered?\n");
-  for(int len = 1<<23; len <=n; len=len*2)
+  for(int len = 1000; len <=2000; len=len*2)
   {
       
     //test for values in [k1,k2]
@@ -61,11 +62,11 @@ int main(){
     printf("%d\t%lf", len,get_execution_time(b_time, e_time));    
     printf("\t%f", ordered(B,len)*1.0);
     
-    //clock_gettime(CLOCK_REALTIME, &b_time);
-    //radix_sort(A,len);
-    //clock_gettime(CLOCK_REALTIME, &e_time);
-    //printf("\t%lf", get_execution_time(b_time, e_time));    
-    //printf("\t%f\n", ordered(A,len)*1.0);
+    clock_gettime(CLOCK_REALTIME, &b_time);
+    radix_sort(A,len);
+    clock_gettime(CLOCK_REALTIME, &e_time);
+    printf("\t%lf", get_execution_time(b_time, e_time));    
+    printf("\t%f\n", ordered(A,len)*1.0);
     
     
 
@@ -73,35 +74,7 @@ int main(){
   }
   free(B);
   free(A);
-  printf("Scaling seems to be linear for counting sort\n");
+  printf("Scaling linearly\n");
   
-
-  /* implementation of quadratic radix_sort for unknown number of digits
-    
-    //actually, u can easily write an algorithm whit theta(N) complexity using % and /like in 
-    //the quadratic radix_sort to determine max number of digits of elems in array,
-    //such that using this max_digit()and then applying radix sort is still theta(2N)
-    //use this to improve radix_sort
-
-  int* Z=create_array(1<<11);
-  
-  struct timespec b_time, e_time;
-
-  clock_gettime(CLOCK_REALTIME, &b_time);
-  quadratic_radix_sort(Z,1<<11);
-  clock_gettime(CLOCK_REALTIME, &e_time);
-  printf("%lf", get_execution_time(b_time, e_time));   
-  printf("\t%d \n",ordered(Z,1<<11));
-  
-
-  free(Z);
-  */
-
-    //number of digits scale linearly
-
-  int Z[7]={10,1000,1000503902,213,123456789,1,10};
-  printf("%d\n", max_digits(Z,7));
-
-
   return 0;
 }

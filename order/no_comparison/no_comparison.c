@@ -48,7 +48,7 @@ int max_digits(int* A, int size){
         int den=(int)pow(10,d-1);
         for(size_t i = 0; i < size; i++) //read all the array
         {
-            if(((A[i]%mod)/den)==0 && A[i]/den==0){ //if first term is 0, then A[i] has d-1 digits
+            if(   (A[i]%mod)<den && A[i]<den){ //if first term is 0, then A[i] has d-1 digits
                            //second if term checks if I encountered a zero in the middle of a number 
                 count+=1; //number of elements with d-1 digits
             }
@@ -58,27 +58,53 @@ int max_digits(int* A, int size){
     return d-2;
 }
 
+int get_digit(int num, int d){
+    if(d==0){
+        printf("Digits are counted from 1, from right to left");
+    }
+    return (num%(int)pow(10,d))/pow(10,d-1);
+}
 
-void quadratic_radix_sort(int *A,int size){ //to order without knowing digits
-  //shift is digit taken in account
-  int shift=1;
-  int count=0;
-  while(count!=size)
-  {
+void radix_sort(int *A,int size){ //to order without knowing digits
+  int d=max_digits(A,size);  //now I know number of digits
+  int **B=(int **)malloc(sizeof(int*)*d);
+
+  for (size_t i=0; i<d; i++) {
+      B[i]=(int *)calloc(size,sizeof(int));
+  }
+  
+
+  for(size_t k = 1; k <= d; k++)
+  {  
     for(size_t i = 0; i < size; i++) //pick an element of the array
     {
-        count=0;
-        for(size_t j = 0; j < i+1; j++) //read all the other element of the array
-        {
-            if((A[i]%(int)pow(10,shift))/pow(10,shift-1)<(A[j]%(int)pow(10,shift))/pow(10,shift-1) && i>j)
-            {
-                switc(&A[i],&A[j]);
-            }
-            if(A[j]/(int)pow(10,shift)==0){count+=1;} //count how many elements have shift digits
-        }
+       B[k-1][i]=get_digit(A[i],k); 
     }
-    shift+=1;
   }
+
+
+  for(size_t k = 1; k <=d ; k++)
+  {
+      printf("safe zone\n");
+      counting_sort_with_bounds(B[k-1],B[k-1],size,0,9);
+  }
+
+  for(size_t i = 0; i < size; i++)
+  {
+     A[i]=0; 
+     for(size_t k = 1; k <= d; k++)
+     {
+         A[i]+= B[k-1][i];
+     }
+  }
+
+
+
+  for(size_t i = 0; i <d; i++)
+  {
+      free(B[i]);
+  }
+  free(B);
 }
 
 
