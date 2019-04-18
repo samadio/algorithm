@@ -1,14 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include"sorting.h"
 #include"no_comparison.h"
 
 void double_switch(double* a, double* b){
-    if(*a==*b){return;}
-    *a=*a+*b;
-    *b=*a-*b;
-    *a=*a-*b;
+    if((*a)==(*b)){return;}
+    (*a)=(*a)+(*b);
+    (*b)=(*a)-(*b);
+    (*a)=(*a)-(*b);
 }
 
 void counting_sort_with_bounds(int *A,int* B, int len,int low, int up){
@@ -94,76 +93,86 @@ void radix_sort(int *A,int size){ //to order without knowing digits
 
 
 
-size_t partition(double* v,const size_t left,size_t r,size_t p){
-    double_switch(&v[p],&v[left]);
-    for(size_t i=left;i<=r;){
-        if(v[i]>v[left]){
-            double_switch(&v[i],&v[r]);
-            r=r-1;
+
+
+int partition(double* v,const int left,const int r,const int p){
+    int i,j;
+    i=left+1;
+    j=r;
+    while(i<=j){
+        if (v[i]<=v[left]){i+=1;} //first element it's okay
+        else if(v[j]>v[left]){j-=1;}  //last element fine
+        else{
+            double_switch(&v[i],&v[j]);
+            i+=1;
+            j-=1;
         }
-        else{i+=1;}
     }
-    double_switch(&v[left],&v[r]);
-    return r;
+    double_switch(&v[j],&v[left]);
+    return j;
 }
 
 
-
-void bucketsort_aux(double* v,size_t left,const size_t r) {   //quick_sort with doubles.
-    size_t p;
+void quick_sort(double* v, int left, const int r){
+    int p;
     while(left<r){
         p=partition(v,left,r,left);
-        bucketsort_aux(v,left,p-1);
+        quick_sort(v,left,p-1);
         left=p+1;
     }
 }
 
-//not efficient in terms of memory, still linear and easily explicable
-void bucket_sort(double*A,const size_t size,const size_t n){  //n=number of buckets
+
+//not efficient in terms of memory, still almost linear and easily explicable
+void bucket_sort(double*A,const size_t size){ 
+    const size_t n=size;  //n=number of buckets
     double**B=(double**)malloc(n*sizeof(double*));  //array of n buckets
 
-    for (size_t i = 0; i < n; i++)
-    {
-        B[i]=(double*)malloc(size*sizeof(double));  //in principle, each of the n buckets can contain the whole array
-    }
-    
     size_t j;  //bucket idx
     size_t* it=(size_t*)calloc(size,sizeof(size_t)); //it[j] will be identifier of each number in bucket j, at the end will be size of bucket j;
-    
+        
+    for (size_t i = 0; i < size; i++)
+    {
+        j=(size_t)floor(A[i]*n); //bucket id for element i in A
+        it[j]+=1;   //number of elements in bucket j increases   
+    }
+
+    for (size_t j = 0; j < n; j++)
+    {
+        B[j]=(double*)malloc(it[j]*sizeof(double)); //allocate the exact amount
+        it[j]=0;
+    }
+
     for (size_t i = 0; i < size; i++)
     {
         j=(size_t)floor(A[i]*n); //bucket id for element i in A
         B[j][it[j]]=A[i];
-        it[j]+=1;   //number of elements in bucket j        
-    }
+        it[j]++;   
+    }    
     
     for (size_t j = 0; j < n; j++) //order each bucket B[j]
     {
-        bucketsort_aux(&(B[j][0]),0,it[j]-1);
+        int toint= it[j];  //should have no overflow, I expect to have 1 element for bucket
+        quick_sort(B[j],0,toint-1);
     }
     
-
     size_t idx=0;
-    for (size_t j = 0; j < n; j++) //for each bucket
+    for (size_t j = 0; j < n; j++) //for each bucket j
     {
-        for (size_t k = 0; k < it[j]; k++)  //for each element in bucket
+        for (size_t k = 0; k < it[j]; k++)  //for each element B[j][k] in bucket j
         {
             A[idx]=B[j][k];
             idx+=1;
         }
     }
 
-    /*  printf("fine\n");
     for (size_t j = 0; j < n; j++)
     {
         free(B[j]);
     }
-    printf("fine\n");
     free(B);
-    printf("fine\n");
     free(it);
-    printf("fine\n");
-    */
+    
 }
 
 

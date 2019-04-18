@@ -2,11 +2,10 @@
 #include<stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "sorting.h"
 #include "no_comparison.h"
 #include "utils.h"
 
-#define MAX 1000
+#define MAX 100000
 
 int main(){
   const size_t n=1<<20; //from 15 to 20
@@ -19,11 +18,6 @@ int main(){
   for(size_t len = 1<<15; len <=n; len=len*2)
   {
       
-    //test for values in [k1,k2]
-
-    //int A[8]={3,5,4,6,2,1,9,10};
-    //int max= ; //can be done precisely building heaps w r t to < or > eventually,
-    //int min= ; //but it's not the aim    
     struct timespec b_time, e_time;
 
     clock_gettime(CLOCK_REALTIME, &b_time);
@@ -41,7 +35,7 @@ int main(){
     
 
     clock_gettime(CLOCK_REALTIME, &b_time);
-    bucket_sort(A3,len,100);
+    bucket_sort(A3,len);
     clock_gettime(CLOCK_REALTIME, &e_time);
     printf("\t%lf", get_execution_time(b_time, e_time));    
     printf("\t%f\n", ordered_double(A3,len)*1.0);

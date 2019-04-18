@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include <time.h>
 
-#define MAX 1000
+#define MAX 100000
 
 int* create_array(const size_t len){
     int *A=(int*)calloc(len,sizeof(int));
@@ -49,7 +49,7 @@ int ordered(int *v,const size_t len){
 int ordered_double(double *v,const size_t len){
     int r=1;
     for(size_t i=0;i<len-1;i++){
-        if(v[i] > v[i+1] && (v[i]-v[i+1])>1e-4){ //to avoid representation problems
+        if(v[i] > v[i+1] && (v[i]-v[i+1])>1.0/MAX){ //to avoid representation problems
             printf("Problem: v[%ld]=%lf>v[%ld]=%lf\n", i,v[i], i+1,v[i+1]);
             r=0;
         }

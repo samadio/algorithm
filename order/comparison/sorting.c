@@ -20,16 +20,20 @@ void insertion_sort(float* v,int dim){
 
 
 int partition(float* v,int left,int r,int p){
-    switc(&v[p],&v[left]);
-    for(int i=left;i<=r;){
-        if(v[i]>v[left]){
-            switc(&v[i],&v[r]);
-            r=r-1;
+    int i,j;
+    i=left+1;
+    j=r;
+    while(i<=j){
+        if (v[i]<=v[left]){i+=1;} //first element it's okay
+        else if(v[j]>v[left]){j-=1;}  //last element fine
+        else{
+            switc(&v[i],&v[j]);
+            i+=1;
+            j-=1;
         }
-        else{i+=1;}
     }
-    switc(&v[left],&v[r]);
-    return r;
+    switc(&v[j],&v[left]);
+    return j;
 }
 
 
@@ -41,4 +45,3 @@ void quick_sort(float* v, int left, int r){
         left=p+1;
     }
 }
-
