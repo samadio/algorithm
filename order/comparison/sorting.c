@@ -42,23 +42,3 @@ void quick_sort(float* v, int left, int r){
     }
 }
 
-void counting_sort(float **A,int size_A, float **B,int k1,int k2){ //to be extended from [0,k] to [k1-k2]
-    float **C= calloc(k2-k1,sizeof(float));
-    for(size_t i = 0; i < size_A; i++)
-    {
-        C[A[i]-k1]+=1;
-    }
-    
-    for(size_t j = 1; j < (k2-k1); j++)
-    {
-        C[j]=C[j-1]+C[j];
-    }
-    
-    for(size_t i = size_A-1; i >=0; i--)
-    {
-        B[C[A[i]-k1]]=A[i];
-        C[A[i]-k1]=C[A[i]-k1]-1;
-    }
-    free(C);'
-}
-

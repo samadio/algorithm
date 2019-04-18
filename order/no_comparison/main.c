@@ -4,48 +4,19 @@
 #include <math.h>
 #include "sorting.h"
 #include "no_comparison.h"
+#include "utils.h"
 
-#define MAX 500
-
-int* create_array(int len){
-    int *A=(int*)calloc(len,sizeof(int));
-    for(int i = 0; i < len; i++)
-    {
-        A[i]=rand()% MAX;
-    }
-    return A;
-}
-
-double get_execution_time(const struct timespec b_time,
-                          const struct timespec e_time)
-{
-  return (e_time.tv_sec-b_time.tv_sec) +
-                   (e_time.tv_nsec-b_time.tv_nsec)/1E9;
-}
-
-int ordered(int *v,int len){
-    int r=1;
-    for(int i=0;i<len-1;i++){
-        if(v[i] > v[i+1]){
-            printf("Problem: v[%d]=%d>v[%d]=%d\n", i,v[i], i+1,v[i+1]);
-            r=0;
-        }
-    }
-    if(v[0]>v[len-1]){r=0;}
-    return r;
-}
-
-
-
+#define MAX 1000
 
 int main(){
-  int n=1<<20; //from 15 to 20
+  const size_t n=1<<20; //from 15 to 20
   int* A=create_array(n);
   int *B=(int*)calloc(n,sizeof(int));
   int* A2=create_array(n);
+  double* A3=create_array_double(n);
 
-  printf("size\tcounting sort\tordered?\tradix sort\tordered?\n");
-  for(int len = 1<<15; len <=n; len=len*2)
+  printf("size\tcounting sort\tordered?\tradix sort\tordered?\tbucket sort\tordered?\n");
+  for(size_t len = 1<<15; len <=n; len=len*2)
   {
       
     //test for values in [k1,k2]
@@ -56,9 +27,9 @@ int main(){
     struct timespec b_time, e_time;
 
     clock_gettime(CLOCK_REALTIME, &b_time);
-    counting_sort_with_bounds(A,B,len,0,MAX);
+    counting_sort_with_bounds(A,B,len,len*0,MAX);
     clock_gettime(CLOCK_REALTIME, &e_time);
-    printf("%d\t%lf", len,get_execution_time(b_time, e_time));    
+    printf("%ld\t%lf", len,get_execution_time(b_time, e_time));    
     printf("\t%f", ordered(B,len)*1.0);
   
     
@@ -66,14 +37,22 @@ int main(){
     radix_sort(A2,len);
     clock_gettime(CLOCK_REALTIME, &e_time);
     printf("\t%lf", get_execution_time(b_time, e_time));    
-    printf("\t%f\n", ordered(A2,len)*1.0);
+    printf("\t%f", ordered(A2,len)*1.0);
     
-    
+
+    clock_gettime(CLOCK_REALTIME, &b_time);
+    bucket_sort(A3,len,100);
+    clock_gettime(CLOCK_REALTIME, &e_time);
+    printf("\t%lf", get_execution_time(b_time, e_time));    
+    printf("\t%f\n", ordered_double(A3,len)*1.0);
 
     
   }
   free(B);
   free(A);
+  free(A2);
+  free(A3);
+  
   printf("Scaling linearly\n");
   
   return 0;
