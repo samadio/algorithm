@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include"no_comparison.h"
+#include"sorting_no_comparison.h"
 
 void double_switch(double* a, double* b){
     if((*a)==(*b)){return;}
@@ -9,6 +9,9 @@ void double_switch(double* a, double* b){
     (*b)=(*a)-(*b);
     (*a)=(*a)-(*b);
 }
+
+
+////////////////////////////////////////counting sort //////////////////////////////////////////////
 
 void counting_sort_with_bounds(int *A,int* B, int len,int low, int up){
     int *C=(int*)calloc(1+up-low,sizeof(int));
@@ -35,6 +38,9 @@ void counting_sort_with_bounds(int *A,int* B, int len,int low, int up){
     free(C);
     
 }
+
+
+////////////////////////////radix sort////////////////////////////////////
 
 int max_digits(int* A, int size){
     int count=0;
@@ -91,11 +97,9 @@ void radix_sort(int *A,int size){ //to order without knowing digits
     }
 }
 
+//////////////////////////////////////bucket sort//////////////////////////////
 
-
-
-
-int partition(double* v,const int left,const int r,const int p){
+int partition_double(double* v,const int left,const int r,const int p){
     int i,j;
     i=left+1;
     j=r;
@@ -113,17 +117,16 @@ int partition(double* v,const int left,const int r,const int p){
 }
 
 
-void quick_sort(double* v, int left, const int r){
+void quick_sort_double(double* v, int left, const int r){
     int p;
     while(left<r){
-        p=partition(v,left,r,left);
-        quick_sort(v,left,p-1);
+        p=partition_double(v,left,r,left);
+        quick_sort_double(v,left,p-1);
         left=p+1;
     }
 }
 
 
-//not efficient in terms of memory, still almost linear and easily explicable
 void bucket_sort(double*A,const size_t size){ 
     const size_t n=size;  //n=number of buckets
     double**B=(double**)malloc(n*sizeof(double*));  //array of n buckets
@@ -153,7 +156,7 @@ void bucket_sort(double*A,const size_t size){
     for (size_t j = 0; j < n; j++) //order each bucket B[j]
     {
         int toint= it[j];  //should have no overflow, I expect to have 1 element for bucket
-        quick_sort(B[j],0,toint-1);
+        quick_sort_double(B[j],0,toint-1);
     }
     
     size_t idx=0;
@@ -174,31 +177,3 @@ void bucket_sort(double*A,const size_t size){
     free(it);
     
 }
-
-
-/*
-int select_pivot(*A,int l=1,int r=len(A)){
-    for(size_t i = 0; i <= (r-l)/5; i++)
-    {
-        insertion_sort(A,5*i+l,min(5*i+l+4,r));
-    }
-    
-    for(size_t i = 0; i <= (r-l)/5; i++)
-    {
-        swap(A,l+i,max(5*i+l+2,r)); //swap all the medians all togheter at the beginning of A
-    }
-
-    return select(A, ((r-l)/5+1)*0.5, l, l+ (r-l)/5);
-}
-
-
-//this algoithm allows u to choose the best pivot-> best case scenario: quicksort= theta(nlog n)
-//if r<140 u use another algorithm to have linearity?
-int select(*A,int i,int l=1,int r=len(A)){ //l where to start from, r where to stop looking
-    j=select_pivot(A,l,r);
-    k=partition(A,l,r,j);
-    if(i==k) return k;
-    if(i<k) return select(A,i,l,k-1); //look in S
-    return select(A,i,k+1,r);   //look in G
-}
-*/

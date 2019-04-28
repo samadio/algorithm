@@ -115,3 +115,33 @@ void heap_sort(float* H,int size){
     }
     
 }
+
+
+///reverse ordering
+
+void heapify_reverse(float *H,int i, int size){
+    int m=i;
+
+    for(int j = left(i); j <=right(i); j++)
+    { 
+        if (is_valide_node(H,j,size) && H[j]<=H[m]) {
+            m=j;
+        }
+    }
+    if(i!=m){
+        swap(H,i,m);
+        heapify(H,m,size);
+    }
+}
+
+void heap_sort_reverse(float* H,int size){
+    build_heap(H,size);
+
+    for(size_t i = size-1; i >=1; i--)
+    {
+        swap(H,0,i);
+        size=size-1;
+        heapify_reverse(H,0,size);
+    }
+    
+}

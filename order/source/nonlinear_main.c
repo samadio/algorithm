@@ -3,32 +3,7 @@
 #include <time.h>
 
 #include "sorting.h"
-
-void copy_vec(float *v1, float* v2, int len){
-    for(int i=0;i<len;i++){
-        v1[i]=v2[i];
-    }
-}
-
-
-double get_execution_time(const struct timespec b_time,
-                          const struct timespec e_time)
-{
-  return (e_time.tv_sec-b_time.tv_sec) +
-                   (e_time.tv_nsec-b_time.tv_nsec)/1E9;
-}
-
-int ordered(float *v,int len){
-    int r=1;
-    for(int i=0;i<len-1;i++){
-        if(v[i] > v[i+1]){
-            printf("Problem: v[%d]=%f>v[%d]=%f\n", i,v[i], i+1,v[i+1]);
-            r=0;
-        }
-    }
-    if(v[0]>v[len-1]){r=0;}
-    return r;
-}
+#include "utils.h"
 
 int main()
 {
@@ -62,7 +37,7 @@ int main()
         clock_gettime(CLOCK_REALTIME, &e_time);
         printf("\t%lf", get_execution_time(b_time, e_time));
 
-        printf("\t%f", ordered(v,len)*1.0);
+        printf("\t%f", ordered_float(v,len)*1.0);
 
         //reinitialize v to original values
         copy_vec(v,tmp,len);
@@ -72,7 +47,7 @@ int main()
         heap_sort(v,len);
         clock_gettime(CLOCK_REALTIME, &e_time);
         printf("\t%lf", get_execution_time(b_time, e_time));
-        printf("\t%f\n", ordered(v,len)*1.0);
+        printf("\t%f\n", ordered_float(v,len)*1.0);
 
         
 

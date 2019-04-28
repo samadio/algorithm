@@ -2,12 +2,14 @@
 #include<stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "no_comparison.h"
+#include "sorting_no_comparison.h"
 #include "utils.h"
 
 #define MAX 100000
 
 int main(){
+  
+  
   const size_t n=1<<20; //from 15 to 20
   int* A=create_array(n);
   int *B=(int*)calloc(n,sizeof(int));
@@ -42,6 +44,22 @@ int main(){
 
     
   }
+
+  /*
+  int* test=(int*)malloc(5*sizeof(int));
+  test[0]=3;
+  test[1]=2;
+  test[2]=1;
+  test[3]=6;
+  test[4]=4;
+
+  for (size_t i = 0; i < 5; i++)
+  {
+      printf("%d ",selection(test,i,0,4));
+  }
+  printf("\n");  
+  free(test);
+  */
   free(B);
   free(A);
   free(A2);
