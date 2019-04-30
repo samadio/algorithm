@@ -1,6 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
-#include "side.h"
+#include "utils.h"
 #include <time.h>
 #define MAX_ELEM_VALUE 250
 #define CMM(M,row,col) M[row] [col]

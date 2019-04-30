@@ -3,7 +3,7 @@
 #include <time.h>
 
 #include "chain.h"
-#include "side.h"
+#include "utils.h"
 
 int *build_dimensions(const int n) {
   int *dims = (int *)malloc(sizeof(int) * (n + 1));

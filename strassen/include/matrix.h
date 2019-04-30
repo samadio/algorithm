@@ -1,6 +1,6 @@
 #ifndef __MATRIX__
 
-//#define __MATRIX__
+#define __MATRIX__
 
 #include <stdlib.h>
 

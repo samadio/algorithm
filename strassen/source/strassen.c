@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include<stdio.h>
 #include "matrix.h"
 
 void sum_matrix_blocks(float **C,
@@ -75,7 +75,6 @@ void strassen_aux(float **C, const size_t C_f_row, const size_t C_f_col,
               n);
     return;
   }
-
   const size_t n2=n/2;
 
   const size_t C1X = C_f_row;

@@ -80,7 +80,7 @@ void build_heap(float* A,int size){
 void heap_decrease_key(float* H,int i, float value){
     if( H[i]>=value){
         printf("value:%f is not greater than H[%d]:%f \n", value, i, H[i]);
-        1/0;
+        //1/0;
         return;
     }
     H[i]=value;
