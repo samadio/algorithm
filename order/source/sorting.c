@@ -19,7 +19,6 @@ void insertion_sort(float* v,int dim){
     }
 }
 
-
 int partition(float* v,int left,int r,int p){
     int i,j;
     switc(&v[p],&v[left]);
@@ -41,6 +40,8 @@ int partition(float* v,int left,int r,int p){
     switc(&v[j],&v[left]);
     return j;
 }
+
+
 
 
 void quick_sort(float* v, int left, int r){
@@ -97,6 +98,28 @@ int select_pivot(float *A,int l,int r){
     return m;
 }
 
+int partition_greater(float* v,int left,int r,int p){ //just like partition, put values equal to pivot are stored in G, so that I have globally [S,pivot,G] 
+    int i,j;
+    switc(&v[p],&v[left]);
+    i=left+1;
+    j=r;
+    while(i<=j){
+        if (v[i]-v[left]<0.00001){ //data generated between 0 and 1 with distance 10^-5
+            i++;
+        }
+        else if(v[j]-v[left]>-0.00001){   //it's like greater or equal 0
+            --j;
+        }
+        else{
+            switc(&v[i],&v[j]);
+            ++i;
+            --j;
+        }
+    }
+    switc(&v[j],&v[left]);
+    return j;
+}
+
 
 float selection(float *A,int i,int l,int r){ //l where to start from, r where to stop looking
     if(l==r) return A[l];
@@ -104,18 +127,23 @@ float selection(float *A,int i,int l,int r){ //l where to start from, r where to
     
     int k=partition(A,l,r,j);  //k is the index of j in sorted_A
     
-    if(i==k) return A[k];
-    if(i<k) return selection(A,i,l,k-1); //look in S
     if(i>k) return selection(A,i,k+1,r);   //look in G
+    int first_occurrency=partition_greater(A,l,k,k);  //otherwise divide S between S and pivot occurrencies
+    if(first_occurrency<=i<=k) return A[k];
+    k=first_occurrency;
+    if(i<k) return selection(A,i,l,k-1); //look in S without pivot
     
 }
+
 
 void quick_sort_best(float* v, int left, int r){
     int p,selected;
     while(left<r){
         selected= select_pivot(v,left,r);
         p=partition(v,left,r,selected);
-        quick_sort_best(v,left,p-1);
+        int f_occ=partition_greater(v,left,p,p);
+        quick_sort_best(v,left,f_occ-1); //sort before pivot occurrencies
         left=p+1;
+        //quick_sort_best(v,p+1,r);  //sort after all pivot occurrencies
     }
 }
