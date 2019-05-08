@@ -21,6 +21,8 @@ int main(){
   printf("reverse ordered %d \n", ordered_reverse(B,n));
   */
 
+  float* no_rep=create_norep(n);
+  
   printf("size\tworst insert\tbest insert\tworst quick\tbest quick\n");
   
   for(size_t len = 1<<10; len <=n; len=len*2)
@@ -44,11 +46,12 @@ int main(){
     clock_gettime(CLOCK_REALTIME, &e_time);
     printf("\t%lf", get_execution_time(b_time, e_time));    
 
-    copy_vec(A,B,len);
+    //copy_vec(A,B,len);
     clock_gettime(CLOCK_REALTIME, &b_time);
-    quick_sort_best(A,0,len-1);
+    quick_sort_best(no_rep,0,len-1);
     clock_gettime(CLOCK_REALTIME, &e_time);
-    printf("\t%lf\n", get_execution_time(b_time, e_time));//,ordered_float(A,len)*1.0);    
+    printf("\t%lf\t", get_execution_time(b_time, e_time));
+    printf("%f\n",ordered_float(no_rep,len)*1.0);    
 
   }
 

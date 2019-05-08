@@ -20,7 +20,7 @@ void heap_sort_reverse(float* H,int size);
 
 void counting_sort(float **A,int size_A, float **B,int k1,int k2);
 
-int selection(int *A,int i,int l,int r);
+float selection(float *A,int i,int l,int r);
 
 void quick_sort_best(float* v, int left, int r);
 #endif

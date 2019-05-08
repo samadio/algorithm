@@ -37,6 +37,16 @@ float* create_array_float(const size_t len){
     return A;
 }
 
+float* create_norep(size_t size){
+    float*A=(float*)malloc(size*sizeof(float));
+    
+    for (size_t i = 0; i < size; i++)
+    {
+        A[i]=5.0/(size-i)*1.0;
+    }    
+    return A;
+}
+
 double get_execution_time(const struct timespec b_time,
                           const struct timespec e_time)
 {

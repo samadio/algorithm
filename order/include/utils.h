@@ -6,6 +6,7 @@ void copy_vec(float *v1, float* v2, int len);
 int* create_array(const size_t len);
 double* create_array_double(const size_t len);
 float* create_array_float(const size_t len);
+float* create_norep(size_t size);
 
 double get_execution_time(const struct timespec b_time, const struct timespec e_time);
 
