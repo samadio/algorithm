@@ -64,7 +64,7 @@ void heapify(float *H,int i, int size){
 }
 
 
-void remove_minimum(float* H, int i,int size){
+void remove_minimum(float* H,int size){
     H[0]=H[size-1];
     heapify(H,0,size-1);
 }

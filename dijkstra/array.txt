@@ -1,0 +1,13 @@
+source is node 1 
+target is node 1, total distance: 0.000000
+1
+target is node 2, total distance: 1.000000
+2 1
+target is node 3, total distance: 5.000000
+3 1
+target is node 4, total distance: 7.000000
+4 3 1
+target is node 5, total distance: 8.000000
+5 4 3 1
+target is node 6, total distance: 16.000000
+6 2 1
